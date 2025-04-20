@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trust Bank - Register</title>
+    <title>Finance Bank - Sign Up</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -34,7 +34,7 @@
                 </div>
                 <h1 class="text-2xl font-bold text-maze-green-950">TRUST BANK</h1>
             </div>
-            <h2 class="text-2xl font-bold text-maze-green mb-6 text-center">Create Your Account</h2>
+            <h2 class="text-2xl font-bold text-maze-green mb-6 text-center">Create New Account</h2>
             <form method="POST" class="space-y-5">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -45,6 +45,10 @@
                         <label for="family-name" class="block text-maze-green-950 mb-1 font-medium">Family Name</label>
                         <input id="family-name" name="family_name" type="text" class="w-full p-3 border border-maze-green-900 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-maze-green" required />
                     </div>
+                </div>
+                <div>
+                    <label for="nin" class="block text-maze-green-950 mb-1 font-medium">National Identification Number (NIN)</label>
+                    <input id="nin" name="national_identifier_number" type="text" class="w-full p-3 border border-maze-green-900 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-maze-green" required />
                 </div>
                 <div>
                     <label for="email" class="block text-maze-green-950 mb-1 font-medium">Email</label>
