@@ -70,7 +70,8 @@
         <!-- Main Content -->
         <div class="flex-1 p-4 md:p-8">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold mb-4 md:mb-0">Hi, Banjamin</h2>
+                <!-- Keep only this one with the id that gets updated -->
+                <h2 class="text-2xl font-bold mb-4 md:mb-0" id="greeting">Hi, Benjamin</h2>
                 <span class="text-gray-500">Today, 2022-07-15</span>
             </div>
 
@@ -87,23 +88,7 @@
                         <h3 class="text-2xl font-bold">$25,236.32</h3>
                     </div>
 
-                    <!-- Income Box -->
-                    <div class="bg-maze-green-950 text-white p-6 rounded-lg">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm">Income</span>
-                            <div class="w-8 h-8 bg-white rounded-full"></div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-green-400">+$2,410.00</h3>
-                    </div>
-
-                    <!-- Expenses Box -->
-                    <div class="bg-maze-green-950 text-white p-6 rounded-lg">
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm">Expenses</span>
-                            <div class="w-8 h-8 bg-white rounded-full"></div>
-                        </div>
-                        <h3 class="text-2xl font-bold text-red-400">-$2,175.00</h3>
-                    </div>
+                   
                 </div>
             </div>
 
@@ -198,6 +183,15 @@
         // Example: Replace with actual balance from backend if available
         let clientBalance = 25236.32;
 
+        // Fetch user info
+        fetch('/get_user_info')
+            .then(response => response.json())
+            .then(data => {
+                if(data.name) {
+                    document.getElementById('greeting').textContent = `Hello ${data.name}`;
+                }
+            });
+
         function generateCode() {
             return 'TX' + Math.random().toString(36).substr(2, 8).toUpperCase();
         }
@@ -270,6 +264,11 @@
             messageDiv.className = "text-green-600 mt-2";
             codeDiv.textContent = code;
             amountInput.value = '';
+        }
+    </script>
+</body>
+</html>
+</html>
         }
     </script>
 </body>
