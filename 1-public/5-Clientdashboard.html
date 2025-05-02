@@ -110,19 +110,32 @@
                         <div id="bank-code" class="text-sm mt-2 font-bold text-blue-700"></div>
                     </div>
                 </div>
-                <!-- Latest Transactions -->
+
+                <!-- Transaction Popup Modal -->
+                <div id="transaction-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative">
+                        <button onclick="closeTransactionModal()" class="absolute top-2 right-4 text-gray-500 text-xl">&times;</button>
+                        <h2 class="text-xl font-bold mb-4 text-maze-green-900">Transaction Created</h2>
+                        <div class="mb-4">
+                            <div class="mb-2"><strong>Transaction Code:</strong> <span id="modal-tx-code"></span></div>
+                            <div class="mb-4 text-gray-700">Please give this code to the cashier to deposit or withdraw your money. The transaction will be completed within 24 hours. Once you've received the funds, please confirm below.</div>
+                        </div>
+                        <button id="confirm-received-btn" class="w-full bg-maze-green-900 hover:bg-maze-green-950 text-white font-semibold py-2 rounded">Confirm Received</button>
+                    </div>
+                </div>
+
+                <!-- Latest Transfers -->
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Latest Transactions</h3>
+                    <h3 class="text-lg font-bold mb-4">Latest Transfers</h3>
                     <div class="space-y-4">
                         <div class="bg-white p-4 rounded-lg flex justify-between items-center">
                             <div>
                                 <p class="text-sm text-gray-500">2022-03-13</p>
                                 <div class="flex items-center space-x-2">
-                                    <span>@BBaker1</span>
+                                    <span>RIP: 1234567890</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span>@FRoberts2</span>
                                 </div>
                             </div>
                             <div class="flex items-center">
@@ -137,11 +150,10 @@
                             <div>
                                 <p class="text-sm text-gray-500">2022-03-17</p>
                                 <div class="flex items-center space-x-2">
-                                    <span>@BBaker1</span>
+                                    <span>RIP: 1234567890</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span>@IHurley4</span>
                                 </div>
                             </div>
                             <div class="flex items-center">
@@ -159,7 +171,7 @@
                     <h3 class="text-lg font-bold mb-4">Send Money</h3>
                     <div class="bg-white p-6 rounded-lg">
                         <div class="mb-4">
-                            <label class="block text-sm mb-2">Payee Address</label>
+                            <label class="block text-sm mb-2">RIP</label>
                             <input type="text" placeholder="@SWest5" class="w-full p-2 border rounded-md">
                         </div>
                         <div class="mb-4">
@@ -202,6 +214,20 @@
             localStorage.setItem('pendingRequests', JSON.stringify(requests));
         }
 
+        function showTransactionModal(code) {
+            document.getElementById('modal-tx-code').textContent = code;
+            document.getElementById('transaction-modal').classList.remove('hidden');
+        }
+
+        function closeTransactionModal() {
+            document.getElementById('transaction-modal').classList.add('hidden');
+        }
+
+        document.getElementById('confirm-received-btn').onclick = function() {
+            alert('Thank you for confirming!');
+            closeTransactionModal();
+        };
+
         function requestDeposit() {
             const amountInput = document.getElementById('bank-amount');
             const messageDiv = document.getElementById('bank-message');
@@ -214,7 +240,6 @@
                 return;
             }
             const code = generateCode();
-            // Save request for cashier
             saveRequestToStorage({
                 code,
                 type: 'deposit',
@@ -225,9 +250,9 @@
                 },
                 status: "pending"
             });
-            messageDiv.textContent = "Deposit request created! Give this code to the cashier:";
-            messageDiv.className = "text-green-600 mt-2";
-            codeDiv.textContent = code;
+            messageDiv.textContent = "";
+            codeDiv.textContent = "";
+            showTransactionModal(code);
             amountInput.value = '';
         }
 
@@ -249,7 +274,6 @@
                 return;
             }
             const code = generateCode();
-            // Save request for cashier
             saveRequestToStorage({
                 code,
                 type: 'withdraw',
@@ -260,15 +284,10 @@
                 },
                 status: "pending"
             });
-            messageDiv.textContent = "Withdraw request created! Give this code to the cashier:";
-            messageDiv.className = "text-green-600 mt-2";
-            codeDiv.textContent = code;
+            messageDiv.textContent = "";
+            codeDiv.textContent = "";
+            showTransactionModal(code);
             amountInput.value = '';
-        }
-    </script>
-</body>
-</html>
-</html>
         }
     </script>
 </body>
